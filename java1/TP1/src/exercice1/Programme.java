@@ -64,12 +64,12 @@ public class Programme {
 	}
 
 	/* ------------------ Exercice 1.4 --------------------------- */
-	public static void swap_C(int[][] tab, int nb) {
+	public static void swap_C(int[][] tab, int nbl, int nbc) {
 		int val;
-		
-		for ( int i =0; i< tab . length ; i ++) {
-
-		}
+		val=tab[nbl][nbc];
+		tab[nbl][nbc]=tab[nbl][nbc+1];
+		tab[nbl][nbc+1]=val;
+		System.out.print(tab);
 	}
 	
 	public static void bulle_C(int[] tab, int n) {
@@ -90,7 +90,7 @@ public static void triBulle1D_C(int[] tab) {
 	
 	public static void triBulle2DColonnes(int[][] tab) {
 		
-
+		swap_C(genTab2D(3,3),2,3);
 	}
 		
 	/* ------------------ Exercice 1.5 --------------------------- */
