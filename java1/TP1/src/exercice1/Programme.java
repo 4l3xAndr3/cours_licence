@@ -67,19 +67,18 @@ public class Programme {
 	public static void swap_C(int[][] tab, int nbl, int nbc) {
 		int val;
 		val=tab[nbl][nbc];
-		tab[nbl][nbc]=tab[nbl][nbc+1];
-		tab[nbl][nbc+1]=val;
-		System.out.print(tab);
+		tab[nbl][nbc]=tab[nbl+1][nbc];
+		tab[nbl+1][nbc]=val;
 	}
 	
-	public static void bulle_C(int[] tab, int n) {
+	public static void bulle_C(int[][] tab, int n) {
 		
 		for(int i=0;i<n;i++) {
-			
-			if (tab[i]>tab[i+1]) {
-				swap(tab,i);
+			for(int j=0;j<n;j++) {
+				if (tab[i][j]>tab[i+1][j]) {
+				swap_C(tab,i,j);
 			}
-		}
+		}}
 	}
 
 public static void triBulle1D_C(int[] tab) {
@@ -90,7 +89,7 @@ public static void triBulle1D_C(int[] tab) {
 	
 	public static void triBulle2DColonnes(int[][] tab) {
 		
-		swap_C(genTab2D(3,3),2,3);
+		swap_C(tab,1,1);
 	}
 		
 	/* ------------------ Exercice 1.5 --------------------------- */
