@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 
+// creation des zpixel
 zpixel * createZpixel(int x,int y,int size,unsigned char r,unsigned char v,unsigned char b,int degradation ){
 	zpixel * zpixelP;
 	zpixelP = (zpixel *)malloc(sizeof(zpixel));
@@ -20,33 +21,57 @@ zpixel * createZpixel(int x,int y,int size,unsigned char r,unsigned char v,unsig
 	return zpixelP;
 }
 
+zpixel * createZpixelNoir(int x,int y,int size,int degradation ){
+	return createZpixel(x,y,size,0,0,0,degradation);
+}
+zpixel * createZpixelBlanc(int x,int y,int size,int degradation ){
+	return createZpixel(x,y,size,255,255,255,degradation);
+}
+
+//destruction des zpixel
 void destroyZpixel(zpixel * DZpixel){
 	free(DZpixel);
 }
 
-zpixel * createZpixelNoir(int x,int y,int size,int degradation ){
-	return createZpixel(x,y,size,0,0,0,degradation);
-}
-zpixel * createZpixelblanc(int x,int y,int size,int degradation ){
-	return createZpixel(x,y,size,255,255,255,degradation);
-}
-
-
+//calcul de la luminositer d'un zpixel
 float luminosite(zpixel * zpixel1){
 	int r=(int)zpixel1->r;
 	int v=(int)zpixel1->v;
 	int b=(int)zpixel1->b;
 
-	int max=(fmax(fmax(r,v),r));
-	int min=(fmax(fmax(r,v),r));
-
+	int max=(fmax(fmax(r,v),b));
+	int min=(fmin(fmin(r,v),b));
 	if (max==0 && min==0)return 0;
 
 	return (max+min)/2;	
 }
 
-float saturation(zpixel * zpixel1){
+//calcul de la saturation d'un zpixel
+int saturation(zpixel * zpixel1){
 	float res;
-	if(luminosite(zpixel1)<128)
-		res=
+	int r=zpixel1->r;
+	int v=zpixel1->v;
+	int b=zpixel1->b;
+	float max=(fmaxf(fmaxf(r,v),b));
+	float min=(fminf(fminf(r,v),b));
+
+	if(luminosite(zpixel1)<128){
+		res=((max-min)/(max+min));
+		res=255*res;
+	}else
+		res=255*((max-min)/(511-(max+min)));
+	return res;
+}
+
+
+float distanceCouleur(zpixel * zpixel1,zpixel * zpixel2){
+	float res;
+
+	int r=pow((zpixel2->r-zpixel1->r),2);
+	int v=pow((zpixel2->v-zpixel1->v),2);
+	int b=pow((zpixel2->b-zpixel1->b),2);
+	res=(r+v+b);
+	res =sqrt(res);	
+
+	return res;
 }

@@ -16,5 +16,7 @@ void destroyZpixel(zpixel * DZpixel);
 zpixel * createZpixelNoir(int x,int y,int size,int degradation );
 zpixel * createZpixelBlanc(int x,int y,int size,int degradation );
 float luminosite(zpixel * zpixel1);
+int saturation(zpixel * zpixel1);
+float distanceCouleur(zpixel * zpixel1,zpixel * zpixel2);
 
 #endif

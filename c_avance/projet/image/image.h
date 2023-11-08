@@ -1,10 +1,10 @@
 typedef struct{
 	int nblignes,nbcol;
 	int rowstride;
-	int tabpixel[];
+	unsigned char * data;
 }image;
 
-image createImage();
-void destroyImage(image DImage);
+image * createImage(int nblignes,int nbcol);
+void destroyImage(image * DImage);
 int setpixel();
-int getpixel();
+int getpixel(image * imageGet,int r,int v,int b);

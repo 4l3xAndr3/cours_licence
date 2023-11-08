@@ -1,9 +1,11 @@
-test:zpixel.o test_Zpixel.o
-	gcc -o  test -W -Wall zpixel.o test_Zpixel.o -lm
+main:zpixel.o image.o main.o
+	gcc -o  main -W -Wall zpixel.o image.o main.o -lm
 
-test_Zpixel.o:zpixel/test_Zpixel.c 
-	gcc -c -W -Wall zpixel/test_Zpixel.c 
-
+main.o:main.c
+	gcc -c -W -Wall main.c
 
 zpixel.o:zpixel/zpixel.h zpixel/zpixel.c
 	gcc -c -W -Wall zpixel/zpixel.c 
+
+image.o:image/image.h image/image.c
+	gcc -c -W -Wall image/image.c
