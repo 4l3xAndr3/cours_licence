@@ -1,6 +1,8 @@
 #include "zpixel.h"
+#include "../image/image.h"
 #include <stdlib.h>
 #include <math.h>
+#include <stdio.h>
 
 // creation des zpixel
 zpixel * createZpixel(int x,int y,int size,unsigned char r,unsigned char v,unsigned char b,int degradation ){
@@ -54,6 +56,7 @@ int saturation(zpixel * zpixel1){
 	int b=zpixel1->b;
 	float max=(fmaxf(fmaxf(r,v),b));
 	float min=(fminf(fminf(r,v),b));
+	if (max==0 && min==0)return 0;
 
 	if(luminosite(zpixel1)<128){
 		res=((max-min)/(max+min));
@@ -75,3 +78,15 @@ float distanceCouleur(zpixel * zpixel1,zpixel * zpixel2){
 
 	return res;
 }
+
+
+
+int projection(zpixel * zpixel1,image * imageProject){
+	for (int i = 0; i < zpixel1->size; ++i)
+		for (int j = 0; j < zpixel1->size; j++){
+			if (i<=imageProject->nblignes || j<=imageProject->nbcol)
+				setpixel(imageProject,zpixel1->x+j,zpixel1->y+i,zpixel1->r,zpixel1->v,zpixel1->b);
+		}
+	return 1;
+}
+

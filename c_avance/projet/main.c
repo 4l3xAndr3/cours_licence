@@ -15,7 +15,7 @@ int main(){
 	else printf("FALSE =blanc : R=%d,V=%d,B=%d\n",zpixelblanc->r,zpixelblanc->v,zpixelblanc->b );
 
 	printf("test zpixel couleur :");
-	zpixel * zpixelcouleur = createZpixel(0,0,2,50,20,100,0);
+	zpixel * zpixelcouleur = createZpixel(2,2,2,50,20,100,0);
 	if (zpixelcouleur->r==50 && zpixelcouleur->v==20 && zpixelcouleur->b==100)printf("true\n");
 	else printf("FALSE couleur : R=%d,V=%d,B=%d\n",zpixelcouleur->r,zpixelcouleur->v,zpixelcouleur->b );
 
@@ -30,7 +30,7 @@ int main(){
 	else printf("FALSE = luminosite:%f\n",resSat);
 
 	printf("test distance zpixel :");
-	zpixel * zpixelcouleur2 = createZpixel(0,0,2,80,50,200,0);
+	zpixel * zpixelcouleur2 = createZpixel(7,7,5,80,50,200,0);
 	float resDist=distanceCouleur(zpixelcouleur,zpixelcouleur2);
 	if ((int)resDist==108) printf("true\n"); 
 	else printf("FALSE = distance : %f\n",resDist);
@@ -40,6 +40,38 @@ int main(){
 
 
 	printf("\n--------------------test image----------------\n");
+	unsigned char r,v;
+	image * image1=createImage(8,10);
+	printf("image vide (%d,%d):\n",image1->nbcol,image1->nblignes);
+	afficheImage(image1);
 
 
+
+	printf("test setpixel :");
+	setpixel(image1,5,1,155,200,166);
+	if (image1->data[40]==155 && image1->data[41]==200 && image1->data[42]==166)printf("true\n");
+	else printf("FALSE pixel=(%d,%d,%d)\n",image1->data[4],image1->data[1],image1->data[2]);
+
+
+	printf("test getpixel :");
+	
+	unsigned char b = getpixel(image1,5,1,&r,&v);
+	if (r==155 && v==200 && b==166)printf("true\n");
+	else printf("FALSE pixel=(%d,%d,%d)\n",r,v,b);
+
+	setpixel(image1,5,1,0,0,0);
+
+	printf("test projection zpixel :");
+	projection(zpixelcouleur,image1);
+	if(getpixel(image1,zpixelcouleur->x,zpixelcouleur->y,&r,&v)==100 && r==50 && v==20 && getpixel(image1,zpixelcouleur->x+1,zpixelcouleur->y+1,&r,&v)==100)printf("true\n");
+	else afficheImage(image1);
+
+	printf("\n");
+	afficheImage(image1);
+
+
+
+	projection(zpixelcouleur2,image1);
+	printf("\n");
+	afficheImage(image1);
 }

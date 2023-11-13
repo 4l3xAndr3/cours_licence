@@ -9,3 +9,6 @@ zpixel.o:zpixel/zpixel.h zpixel/zpixel.c
 
 image.o:image/image.h image/image.c
 	gcc -c -W -Wall image/image.c
+
+clear:
+	rm -f zpixel.o image.o main.o main

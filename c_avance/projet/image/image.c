@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 
-image * createImage(int nblignes,int nbcol){
+image * createImage(int nbcol,int nblignes){
 	image * newImage;
 
 	newImage = (image *)malloc(sizeof(image));
@@ -16,7 +16,10 @@ image * createImage(int nblignes,int nbcol){
 
 	int dim=newImage->rowstride*nblignes;
 	newImage->data=(unsigned char *)malloc(dim*sizeof(unsigned char));
-
+	if(newImage->data == NULL){
+		free(newImage);
+		return 0;
+	}
 	return newImage;
 }
 
@@ -25,9 +28,32 @@ void destroyImage(image * DImage){
 	free(DImage);
 }
 
-int setpixel(image * imageGet,int x,int y){
+int setpixel(image * imageSet,int x,int y,unsigned char r,unsigned char v,unsigned char b){
+	if(x>=imageSet->nblignes || y>=imageSet->nbcol)return 0;
+
+	int localisation = y*imageSet->rowstride+x*3;
+	imageSet->data[localisation] =r;
+	imageSet->data[localisation+1] =v;
+	imageSet->data[localisation+2] =b;
+	return 1;
 }
 
-int getpixel(image * imageGet,int x,int y){
-	
+unsigned char getpixel(image * imageGet,int x,int y,unsigned char *r,unsigned char *v){
+	int localisation = y*imageGet->rowstride+x*3;
+	*r=imageGet->data[localisation];
+	*v=imageGet->data[localisation+1]; 
+	return imageGet->data[localisation+2]; 
+}
+
+
+void afficheImage(image * image1){
+	unsigned char r,v,b;
+	for (int i = 0; i < image1->nblignes; i++){
+		for (int j = 0; j < image1->nbcol; j++)
+		{
+			b=getpixel(image1,j,i,&r,&v);
+			printf("(%d,%d,%d)",r,v,b);
+		}
+		printf("\n");
+	}
 }
