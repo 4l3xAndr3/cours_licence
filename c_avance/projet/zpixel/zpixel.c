@@ -19,7 +19,6 @@ zpixel * createZpixel(int x,int y,int size,unsigned char r,unsigned char v,unsig
 	zpixelP->b=b;
 	zpixelP->degradation=degradation;
 
-
 	return zpixelP;
 }
 
